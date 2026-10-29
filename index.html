@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="SOJUNG — Video Editor Portfolio. 보는 재미를 디자인합니다.">
+  <title>SOJUNG — VIDEO PORTFOLIO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="portfolio-data.js" defer></script>
+  <script src="admin/model.js" defer></script>
+  <script src="content-loader.js" defer></script>
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contents">본문 바로가기</a>
+  <div class="progress-bar" aria-hidden="true"></div>
+  <main>
+    <!-- MEMO 01~03: intro title, folder hover, scroll driven zoom -->
+    <section class="intro-scene" id="intro" aria-labelledby="hero-title">
+      <div class="intro-stage">
+        <header class="micro-header">
+          <span>SOJUNG / VIDEO EDITOR</span>
+          <span class="header-pill">2026 WORK COLLECTION</span>
+          <a class="header-plus" href="#contents" aria-label="콘텐츠 보기">+</a>
+        </header>
+        <div class="hero-copy">
+          <h1 id="hero-title" class="hero-title">PORTFOLIO</h1>
+          <p class="hero-subtitle">영상 편집 포트폴리오 · SOJUNG</p>
+        </div>
+        <div class="folder-scene" aria-label="블루, 오렌지, 옐로우, 핑크, 그레이 컬러 폴더 이미지">
+          <img class="folder folder-orange" src="assets/folder-orange.png" alt="" draggable="false">
+          <img class="folder folder-yellow" src="assets/folder-yellow.png" alt="" draggable="false">
+          <img class="folder folder-pink" src="assets/folder-pink.png" alt="" draggable="false">
+          <img class="folder folder-gray" src="assets/folder-gray.png" alt="" draggable="false">
+          <img class="paper-card" src="assets/part-projects-card.png" alt="" aria-hidden="true" draggable="false">
+          <div class="folder folder-blue" aria-hidden="true">
+            <img class="blue-closed" src="assets/folder-blue.png" alt="" draggable="false">
+          </div>
+        </div>
+        <div class="hero-end"><span>• CONTENTS</span><span>2026 WORK COLLECTION</span><span>#00</span></div>
+        <a href="#contents" class="scroll-hint">SCROLL ↓</a>
+      </div>
+    </section>
+
+    <!-- MEMO 04: lines reveal and reset on reentry -->
+    <section class="intro-about section-pad" id="contents" aria-label="자기소개">
+      <div class="section-mini-head"><span>• CONTENTS</span><span>2026 WORK COLLECTION</span><span>#00</span></div>
+      <div class="intro-about-grid">
+        <img class="intro-illustration reveal" src="assets/illustration.png" alt="책상에서 작업하는 여성의 흑백 일러스트">
+        <div class="intro-about-copy">
+          <p class="eyebrow reveal">VLOG — INFORMATIONAL — SHORT FORM</p>
+          <h2 class="about-sentence">
+            <span class="line-reveal">안녕하세요</span>
+            <span class="line-reveal"><span class="sentence-highlight">작은 순간들을 하나의 이야기로 완성하는</span></span>
+            <span class="line-reveal">영상 편집자 박소정입니다.</span>
+          </h2>
+          <div class="contents-copy-spacing" aria-hidden="true"></div>
+        </div>
+      </div>
+      <a class="section-next" href="#profile">EXPLORE PROFILE ↓</a>
+    </section>
+
+    <!-- MEMO 05~07: text, keyword hover, sequential skill bar -->
+    <section class="profile section-pad" id="profile" aria-labelledby="profile-title">
+      <div class="section-mini-head"><span>SOJUNG / VIDEO EDITOR</span><span>2026 WORK COLLECTION</span><span>#01</span></div>
+      <div class="profile-layout">
+        <div class="profile-left">
+          <img class="portrait" src="assets/portrait.png" alt="박소정 프로필 이미지">
+          <h2 id="profile-title">보는 재미를<br>디자인합니다.</h2>
+          <p class="profile-greeting">안녕하세요. 영상 편집자 박소정입니다.</p>
+          <p class="profile-bio" id="profile-description"></p>
+          <span class="signature">SOJUNG © 2026</span>
+        </div>
+        <div class="profile-right">
+          <div class="profile-feature reveal">
+            <p class="eyebrow">01 / WHAT I DO</p>
+            <h3>영상 콘텐츠 기획 · 편집</h3>
+            <p>유튜브 브이로그 및 정보형 영상 편집<br>컷 편집 · 자막 · 사운드 · 썸네일</p>
+          </div>
+          <div class="profile-feature reveal">
+            <p class="eyebrow">02 / MY KEYWORDS</p>
+            <div class="keywords" id="keywords"></div>
+          </div>
+          <div class="profile-bottom">
+            <div class="profile-feature reveal">
+              <p class="eyebrow">EXPERIENCE / Vlog · Lifestyle</p>
+              <div class="experience">
+                <strong>개인 유튜브 운영 및 편집</strong>
+                <span>브이로그 / 정보형 콘텐츠</span>
+                <span>컷 편집 · 자막 · 썸네일 제작</span>
+              </div>
+              <div class="experience"><strong>브랜드 협찬 콘텐츠 제작</strong><span>브랜드와 콘텐츠의 연결</span></div>
+            </div>
+            <div class="profile-feature reveal skill-panel">
+              <p class="eyebrow">TOOLS</p>
+              <div id="skills"></div>
+              <p class="skill-disclaimer">막대는 화면 연출용이며, 공인 숙련도 점수가 아닙니다.</p>
+            </div>
+            <div class="experience profile-personal-contact reveal profile-experience-reveal">
+              <strong>박소정</strong>
+              <span>Sojung Park</span>
+              <span><a href="tel:+821092411885">82) 10 . 9241 . 1885</a></span>
+              <span><a href="mailto:ritofbin@naver.com">ritofbin@naver.com</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MEMO 08, 09: thumbnails from YouTube URL, hover, click transition -->
+    <section class="works section-pad" id="work" aria-labelledby="work-title">
+      <div class="section-mini-head"><span>SOJUNG / VIDEO EDITOR</span><span>ACTIVE PROJECTS</span><span>02 / WORK</span></div>
+      <div class="works-layout">
+        <div class="works-intro reveal"><p class="eyebrow">02 / WORK</p><h2 id="work-title">SELECTED<br>WORKS</h2><p>콘텐츠의 목적에 맞춰 기획하고,<br>몰입도 높은 영상으로 완성합니다.</p><div class="filter-row" role="group" aria-label="작업물 분류"><button class="filter active" data-filter="all" aria-pressed="true">ALL</button><button class="filter" data-filter="vlog" aria-pressed="false">VLOG</button><button class="filter" data-filter="short" aria-pressed="false">SHORT FORM</button><button class="filter" data-filter="brand" aria-pressed="false">BRAND</button></div></div>
+        <div class="work-grid" id="work-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+<!-- MEMO 10, 11: player + still frame positions -->
+    <section class="study section-pad" id="study" aria-labelledby="study-title">
+      <div class="section-mini-head"><span>SOJUNG / PROJECT CASE STUDY</span><span>03 / DETAIL</span></div>
+      <div class="reveal"><h2 id="study-title">PROJECT STUDY</h2><p class="study-lead">영상으로 결과를 보여주고, 짧은 설명으로 전문성을 증명합니다.</p></div>
+      <div class="study-main">
+        <div class="video-shell reveal" id="video-shell"><div class="video-empty" role="status" aria-label="영상 URL을 등록하면 플레이어가 표시됩니다."></div></div>
+        <div class="study-info reveal"><p class="eyebrow" id="detail-category">01 / TRAVEL VLOG</p><h3 id="detail-title">NEW YORK<br>VLOG EP.01</h3><dl><div><dt>PROJECT TYPE</dt><dd id="detail-type">Travel Vlog / YouTube</dd></div><div><dt>MY ROLE</dt><dd id="detail-role">컷 편집 · 자막 · 사운드</dd></div><div><dt>TOOLS</dt><dd id="detail-tools">Premiere Pro · Photoshop</dd></div></dl></div>
+      </div>
+      <div class="edit-points" id="editing-points"></div>
+      <div class="stills-header"><p class="eyebrow">DETAIL SUPPORTING IMAGES</p></div>
+      <div class="stills" id="stills"></div>
+    </section>
+
+    <!-- MEMO 12~14: contact reveal and youtube navigation -->
+    <footer class="contact section-pad" id="contact" aria-labelledby="contact-title">
+      <div class="section-mini-head"><span>SOJUNG / CONTACT</span><span>© 2026 SOJUNG</span><span>04 / THANK YOU</span></div>
+      <div class="contact-grid">
+        <div><p class="eyebrow reveal">04 / THANK YOU</p><h2 id="contact-title" class="contact-title"><span class="line-reveal">LET’S WORK</span><span class="line-reveal">TOGETHER!</span></h2><p class="reveal">좋은 영상을 함께 만들어갈 파트너를 찾고 있습니다.</p></div>
+        <div class="contact-box reveal"><p class="eyebrow">GET IN TOUCH</p><div><span>Phone</span><a id="phone-link" href="#">010-9241-1885</a></div><div><span>Email</span><a id="email-link" href="#">ritofbin@naver.com</a></div><a id="youtube-link" class="youtube-link" href="https://youtube.com/channel/UCT_262YwZ2nEiK0yJ6hNt7g" target="_blank" rel="noopener noreferrer">YouTube 채널 바로가기 ↗</a></div>
+      </div>
+      <div class="end-row"><span>© 2026 SOJUNG</span><a href="#intro">BACK TO TOP ↑</a></div>
+    </footer>
+  </main>
+</body>
+</html>

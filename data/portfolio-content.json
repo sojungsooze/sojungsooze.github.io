@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "projects": [
+    {
+      "id": "new-york-vlog",
+      "number": "01",
+      "title": "NEW YORK VLOG EP.01",
+      "category": "TRAVEL VLOG · STORYTELLING",
+      "type": "Travel Vlog / YouTube",
+      "role": "컷 편집 · 자막 · 사운드",
+      "tools": "Premiere Pro · Photoshop",
+      "summary": "장면의 흐름과 이야기 구성",
+      "url": "https://www.youtube.com/watch?v=MunzO3FJUuU",
+      "videoFile": "",
+      "previewFile": "",
+      "thumbnail": "",
+      "points": [
+        [
+          "01 / STORY",
+          "장면의 흐름과 이야기 구성"
+        ],
+        [
+          "02 / CUT",
+          "속도감 있는 컷 편집"
+        ],
+        [
+          "03 / CAPTION",
+          "콘텐츠 분위기에 맞는 자막"
+        ]
+      ],
+      "stills": [
+        {
+          "seconds": 15,
+          "image": ""
+        },
+        {
+          "seconds": 45,
+          "image": ""
+        },
+        {
+          "seconds": 90,
+          "image": ""
+        },
+        {
+          "seconds": 135,
+          "image": ""
+        }
+      ]
+    },
+    {
+      "id": "sponsored",
+      "number": "02",
+      "title": "BRAND CONTENT",
+      "category": "SPONSORED CONTENT · EDITING",
+      "type": "Brand Content",
+      "role": "작업 내용 등록 예정",
+      "tools": "등록 예정",
+      "summary": "브랜드 협찬 콘텐츠",
+      "url": "",
+      "videoFile": "",
+      "previewFile": "",
+      "thumbnail": "",
+      "points": [],
+      "stills": []
+    },
+    {
+      "id": "shorts",
+      "number": "03",
+      "title": "SHORT FORM",
+      "category": "SHORTS · REELS · MOTION",
+      "type": "Short Form",
+      "role": "작업 내용 등록 예정",
+      "tools": "등록 예정",
+      "summary": "짧은 영상 편집",
+      "url": "",
+      "videoFile": "",
+      "previewFile": "",
+      "thumbnail": "",
+      "points": [],
+      "stills": []
+    },
+    {
+      "id": "lifestyle",
+      "number": "04",
+      "title": "LIFESTYLE VLOG",
+      "category": "LIFESTYLE · VIDEO EDITING",
+      "type": "Lifestyle Vlog",
+      "role": "작업 내용 등록 예정",
+      "tools": "등록 예정",
+      "summary": "일상 브이로그 편집",
+      "url": "",
+      "videoFile": "",
+      "previewFile": "",
+      "thumbnail": "",
+      "points": [],
+      "stills": []
+    }
+  ]
+}

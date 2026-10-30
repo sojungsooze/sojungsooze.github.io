@@ -7,6 +7,14 @@ export function youtubeId(value){
     return /^[\w-]{11}$/.test(id||'')?id:'';
   }catch{return '';}
 }
+// An explicit startTime opts in; legacy `seconds` values stay image-only.
+export function parseStillStartTime(value){
+  if(typeof value!=='string'||value.length>16)return null;
+  const time=value.trim();
+  if(!/^\d+:[0-5]\d$/.test(time)&&!/^\d+:[0-5]\d:[0-5]\d$/.test(time))return null;
+  const seconds=time.split(':').reduce((total,part)=>total*60+Number(part),0);
+  return Number.isSafeInteger(seconds+180)?seconds:null;
+}
 export function normalizeDocument(input){
   const data=clone(input?.data||input);
   if(!data||!Array.isArray(data.projects))throw new Error('프로젝트 데이터 형식을 확인하세요.');
@@ -58,6 +66,7 @@ export function validateDocument(doc){
     if(p.stills!==undefined&&(!Array.isArray(p.stills)||p.stills.length>4)){errors.push(p.title+': 상세 이미지는 최대 4장입니다.');continue;}
     for(const f of p.stills||[]){if(!f||typeof f!=='object'||Array.isArray(f)){errors.push(p.title+': 상세 이미지 형식을 확인하세요.');continue;}
       if(!validMedia(f.image,{image:true,projectId:p.id}))errors.push(p.title+': 상세 이미지 경로를 확인하세요.');
+      if(f.startTime!==undefined&&(typeof f.startTime!=='string'||(f.startTime.trim()!==''&&parseStillStartTime(f.startTime)===null)))errors.push(p.title+': 영상 시작 시간은 02:35 또는 01:02:30 형식으로 입력하세요.');
       for(const [key,max]of [['title',120],['caption',300],['description',300],['alt',300]])if(f[key]!==undefined&&(typeof f[key]!=='string'||f[key].length>max))errors.push(p.title+': 상세 이미지 '+key+'는 '+max+'자 이하로 입력하세요.');
     }
   }

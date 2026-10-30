@@ -162,6 +162,7 @@ export class AdminApp {
         if(frame._media)card.append(this.el('p','선택한 이미지 · 저장 전','image-state'));
         const title=this.field(card,'제목',frame.title,value=>{frame.title=value;commitFrame(i,frame);},{max:120,placeholder:'장면 제목'});title.setAttribute('aria-label','STILL '+number+' 제목');
         const key=captionKey(frame),description=this.field(card,'설명',frame[key],value=>{frame[key]=value;commitFrame(i,frame);},{area:true,max:300,placeholder:'이 장면의 작업 내용을 적어 주세요.'});description.setAttribute('aria-label','STILL '+number+' 설명');
+        const startTime=this.field(card,'영상 시작 시간',frame.startTime,value=>{frame.startTime=value.trim();commitFrame(i,frame);},{max:16,placeholder:'02:35, 14:10, 01:02:30'});startTime.setAttribute('aria-label','STILL '+number+' 영상 시작 시간');
         const order=this.el('div',undefined,'order-actions');const move=delta=>{
           p.stills||=[];while(p.stills.length<4)p.stills.push({image:''});moveStill(p,i,delta);this.changed();drawStills();
         };

@@ -359,6 +359,9 @@ html,body{overflow-x:clip}.intro-scene{overflow-x:clip}
 .media-lightbox-close:focus-visible{outline:2px solid #319EFF;outline-offset:3px}
 .media-lightbox-caption{margin:16px 0;font-size:14px;line-height:1.5;overflow-wrap:anywhere}
 .media-lightbox-image{display:block;width:100%;height:auto;max-height:75dvh;object-fit:contain}
+.media-lightbox-playing{width:min(960px,calc(100vw - 32px),calc((100dvh - 180px)*1.777778 + 48px))}
+.media-lightbox-video{aspect-ratio:16/9;width:100%;background:#000;border-radius:4px;overflow:hidden}
+.media-lightbox-video iframe{display:block;width:100%;height:100%;border:0}
 .media-lightbox [hidden]{display:none}
 .media-lightbox-status{font-size:14px;line-height:1.6}
 .media-lightbox-status:empty{display:none}

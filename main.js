@@ -225,6 +225,14 @@
       ],{duration:600,delay:index*80,easing:'cubic-bezier(.22,1,.36,1)',fill:'backwards'});
     });
   }));
+  // Explicit startTime opts into a preview; legacy seconds never changes image behavior.
+  const stillStartSeconds=value=>{
+    if(typeof value!=='string'||value.length>16)return null;
+    const time=value.trim();
+    if(!/^\d+:[0-5]\d$/.test(time)&&!/^\d+:[0-5]\d:[0-5]\d$/.test(time))return null;
+    const seconds=time.split(':').reduce((total,part)=>total*60+Number(part),0);
+    return Number.isSafeInteger(seconds+180)?seconds:null;
+  };
   // Native dialog supplies modal focus trapping and Escape; no library required.
   const mediaDialog=make('dialog','media-lightbox');
   mediaDialog.setAttribute('aria-labelledby','media-lightbox-caption');
@@ -234,15 +242,24 @@
   const mediaImage=make('img','media-lightbox-image');mediaImage.decoding='async';mediaImage.hidden=true;
   const mediaStatus=make('p','media-lightbox-status');
   mediaStatus.setAttribute('role','status');
-  mediaDialog.append(mediaClose,mediaCaption,mediaImage,mediaStatus);document.body.append(mediaDialog);
+  const mediaVideo=make('div','media-lightbox-video');mediaVideo.hidden=true;
+  mediaDialog.append(mediaClose,mediaCaption,mediaImage,mediaVideo,mediaStatus);document.body.append(mediaDialog);
   let mediaOrigin=null;
-  const closeMediaLightbox=()=>{if(mediaDialog.open)mediaDialog.close()};
+  const stopMediaVideo=()=>{
+    $$('iframe',mediaVideo).forEach(frame=>{frame.src='about:blank';frame.remove()});
+    mediaVideo.hidden=true;mediaDialog.classList.remove('media-lightbox-playing');
+  };
+  const closeMediaLightbox=()=>{stopMediaVideo();if(mediaDialog.open)mediaDialog.close()};
   mediaClose.addEventListener('click',closeMediaLightbox);
+  mediaDialog.addEventListener('cancel',()=>{stopMediaVideo()});
   mediaDialog.addEventListener('click',event=>{
     const r=mediaDialog.getBoundingClientRect();
     if(event.target===mediaDialog&&(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom))closeMediaLightbox();
   });
   mediaDialog.addEventListener('close',()=>{
+    // A queued close event must not clear a preview that was already reopened.
+    if(mediaDialog.open)return;
+    stopMediaVideo();
     mediaImage.onload=null;mediaImage.onerror=null;
     mediaImage.removeAttribute('src');mediaImage.hidden=true;
     if(mediaOrigin?.isConnected&&!mediaOrigin.disabled)mediaOrigin.focus({preventScroll:true});
@@ -250,11 +267,27 @@
   });
   function openMediaLightbox(src,caption,origin){
     if(!mediaDialog.showModal)return;
+    stopMediaVideo();mediaClose.textContent='닫기';mediaClose.setAttribute('aria-label','확대 이미지 닫기');
     mediaOrigin=origin;mediaCaption.textContent=caption;
     mediaImage.hidden=true;mediaImage.alt=caption;mediaStatus.textContent='이미지를 불러오는 중입니다.';
     mediaImage.onload=()=>{mediaImage.hidden=false;mediaStatus.textContent=''};
     mediaImage.onerror=()=>{mediaImage.hidden=true;mediaImage.removeAttribute('src');mediaStatus.textContent='이미지를 불러올 수 없습니다.'};
     mediaDialog.showModal();mediaClose.focus();mediaImage.src=src;
+  }
+  function openStillVideo(id,start,caption,origin){
+    if(!mediaDialog.showModal)return;
+    stopMediaVideo();
+    mediaImage.onload=null;mediaImage.onerror=null;mediaImage.removeAttribute('src');mediaImage.hidden=true;
+    mediaStatus.textContent='';mediaOrigin=origin;mediaCaption.textContent=caption;
+    mediaClose.textContent='×';mediaClose.setAttribute('aria-label','영상 미리보기 닫기');
+    const frame=make('iframe');frame.title=caption+' · 3분 영상 미리보기';
+    frame.setAttribute('referrerpolicy','strict-origin-when-cross-origin');
+    frame.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';frame.allowFullscreen=true;
+    const embed=new URL('https://www.youtube.com/embed/'+id);
+    // YouTube end is absolute from the original video's beginning.
+    embed.search=new URLSearchParams({autoplay:'1',playsinline:'1',controls:'1',rel:'0',start:String(start),end:String(start+180)}).toString();
+    mediaDialog.classList.add('media-lightbox-playing');mediaVideo.hidden=false;
+    mediaVideo.append(frame);mediaDialog.showModal();mediaClose.focus();frame.src=embed.href;
   }
   // Study content is data-driven; optional fields never acquire invented values.
   const studyVideo=p=>{
@@ -459,8 +492,9 @@
       const label='STILL '+String(i+1).padStart(2,'0');
       const title=typeof frame.title==='string'?frame.title.trim():'';
       const description=typeof frame.caption==='string'?frame.caption:typeof frame.description==='string'?frame.description:'';
+      const start=stillStartSeconds(frame.startTime),videoId=youtubeId(p.url),hasVideo=start!==null&&Boolean(videoId);
       const b=make('button','still-card');b.type='button';b.disabled=true;
-      b.setAttribute('aria-label',p.title+' '+label+(title?' · '+title:'')+' 이미지 확대');
+      b.setAttribute('aria-label',p.title+' '+label+(title?' · '+title:'')+(hasVideo?' 3분 영상 미리보기':' 이미지 확대'));
       const preview=make('div','still-preview');
       const src=safeMediaPath(frame?.image);
       if(src){
@@ -470,7 +504,10 @@
         img.addEventListener('error',()=>{img.remove();b.disabled=true},{once:true});
         img.src=src;preview.append(img);
         b.addEventListener('click',()=>{
-          if(!b.disabled)openMediaLightbox(src,p.title+' / '+label+(title?' · '+title:''),b);
+          if(b.disabled)return;
+          const caption=p.title+' / '+label+(title?' · '+title:'');
+          if(hasVideo)openStillVideo(videoId,start,caption,b);
+          else openMediaLightbox(src,caption,b);
         });
       }
       b.append(preview,make('span','still-title',label+(title?' / '+title:'')));if(description.trim())b.append(make('small','still-description',description));root.append(b);
